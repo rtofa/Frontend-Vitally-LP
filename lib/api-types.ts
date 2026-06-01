@@ -87,6 +87,7 @@ export interface Banner {
   accent?: string;
   active?: boolean;
   status?: string;
+  displayOrder?: number;
 }
 
 export interface BannerCreatePayload {
@@ -97,6 +98,7 @@ export interface BannerCreatePayload {
   ctaLink?: string;
   imageUrl: string;
   active?: boolean;
+  displayOrder: number;
 }
 
 export interface BannerUpdatePayload {
@@ -107,6 +109,7 @@ export interface BannerUpdatePayload {
   ctaLink?: string;
   imageUrl?: string;
   active?: boolean;
+  displayOrder?: number;
 }
 
 export interface BannerStatusPayload {

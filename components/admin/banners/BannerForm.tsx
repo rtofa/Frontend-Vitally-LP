@@ -13,6 +13,7 @@ type BannerFormPayload = {
   ctaLink?: string;
   imageUrl: string;
   active?: boolean;
+  displayOrder: number;
 };
 
 type Props = {
@@ -30,6 +31,7 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
     ctaLink: '',
     imageUrl: '',
     active: true,
+    displayOrder: '0',
   });
 
   const { uploading, error: uploadError, handleFileChange } = useImageUpload();
@@ -44,6 +46,7 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
         ctaLink: initialData.ctaLink || '',
         imageUrl: initialData.imageUrl || '',
         active: initialData.active ?? true,
+        displayOrder: String(initialData.displayOrder ?? 0),
       });
     }
   }, [initialData]);
@@ -61,6 +64,7 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
       ctaLink: form.ctaLink || undefined,
       imageUrl: form.imageUrl,
       active: form.active,
+      displayOrder: Number(form.displayOrder) || 0,
     });
   };
 
@@ -133,6 +137,18 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
             className={inputClass}
           />
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className={labelClass}>Ordem de Exibição</label>
+        <input
+          type="number"
+          min="0"
+          value={form.displayOrder}
+          onChange={(e) => set('displayOrder', e.target.value)}
+          placeholder="0"
+          className={inputClass}
+        />
       </div>
 
       <label className="flex items-center gap-3 text-white/70 text-sm font-semibold cursor-pointer">
