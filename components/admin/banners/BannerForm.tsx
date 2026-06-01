@@ -11,7 +11,8 @@ type BannerFormPayload = {
   tag?: string;
   ctaText?: string;
   ctaLink?: string;
-  imageUrl: string;
+  desktopImageUrl: string;
+  mobileImageUrl: string;
   active?: boolean;
   displayOrder: number;
 };
@@ -29,12 +30,15 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
     tag: '',
     ctaText: '',
     ctaLink: '',
-    imageUrl: '',
+    desktopImageUrl: '',
+    mobileImageUrl: '',
     active: true,
     displayOrder: '0',
   });
 
-  const { uploading, error: uploadError, handleFileChange } = useImageUpload();
+  const { uploading: uploadingDesktop, error: uploadErrorDesktop, handleFileChange: handleDesktopChange } = useImageUpload();
+  const { uploading: uploadingMobile, error: uploadErrorMobile, handleFileChange: handleMobileChange } = useImageUpload();
+  const uploading = uploadingDesktop || uploadingMobile;
 
   useEffect(() => {
     if (initialData) {
@@ -44,7 +48,8 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
         tag: initialData.tag || '',
         ctaText: initialData.ctaText || '',
         ctaLink: initialData.ctaLink || '',
-        imageUrl: initialData.imageUrl || '',
+        desktopImageUrl: initialData.desktopImageUrl || '',
+        mobileImageUrl: initialData.mobileImageUrl || '',
         active: initialData.active ?? true,
         displayOrder: String(initialData.displayOrder ?? 0),
       });
@@ -62,7 +67,8 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
       tag: form.tag || undefined,
       ctaText: form.ctaText || undefined,
       ctaLink: form.ctaLink || undefined,
-      imageUrl: form.imageUrl,
+      desktopImageUrl: form.desktopImageUrl,
+      mobileImageUrl: form.mobileImageUrl,
       active: form.active,
       displayOrder: Number(form.displayOrder) || 0,
     });
@@ -106,17 +112,29 @@ export default function BannerForm({ initialData, onSubmit, submitting }: Props)
         />
       </div>
 
-      {/* ── Hop 1: Image Upload ──────────────────────────────────── */}
-      <ImageUploadField
-        imageUrl={form.imageUrl}
-        uploading={uploading}
-        error={uploadError}
-        onFileChange={(e) =>
-          handleFileChange(e, (url) => set('imageUrl', url))
-        }
-        required
-        label="Imagem do Banner *"
-      />
+      {/* ── Hop 1: Image Uploads (Desktop + Mobile) ────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ImageUploadField
+          imageUrl={form.desktopImageUrl}
+          uploading={uploadingDesktop}
+          error={uploadErrorDesktop}
+          onFileChange={(e) =>
+            handleDesktopChange(e, (url) => set('desktopImageUrl', url))
+          }
+          required
+          label="Imagem Desktop *"
+        />
+        <ImageUploadField
+          imageUrl={form.mobileImageUrl}
+          uploading={uploadingMobile}
+          error={uploadErrorMobile}
+          onFileChange={(e) =>
+            handleMobileChange(e, (url) => set('mobileImageUrl', url))
+          }
+          required
+          label="Imagem Mobile *"
+        />
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">

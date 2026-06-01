@@ -82,7 +82,8 @@ export interface Banner {
   tag?: string;
   ctaText?: string;
   ctaLink?: string;
-  imageUrl?: string;
+  desktopImageUrl?: string;
+  mobileImageUrl?: string;
   image?: string;
   accent?: string;
   active?: boolean;
@@ -96,7 +97,8 @@ export interface BannerCreatePayload {
   tag?: string;
   ctaText?: string;
   ctaLink?: string;
-  imageUrl: string;
+  desktopImageUrl: string;
+  mobileImageUrl: string;
   active?: boolean;
   displayOrder: number;
 }
@@ -107,7 +109,8 @@ export interface BannerUpdatePayload {
   tag?: string;
   ctaText?: string;
   ctaLink?: string;
-  imageUrl?: string;
+  desktopImageUrl?: string;
+  mobileImageUrl?: string;
   active?: boolean;
   displayOrder?: number;
 }

@@ -9,22 +9,22 @@ import type { Banner } from '@/lib/api-types';
 type HeroSlide = {
   id: number | string;
   tag: string;
-  headline: string;
   sub: string;
   cta: string;
   href: string;
-  image: string;
+  desktopImage: string;
+  mobileImage: string;
   accent: string;
 };
 
 const mapBannerToSlide = (banner: Banner, index: number): HeroSlide => ({
   id: banner.id ?? index,
   tag: banner.tag ?? '',
-  headline: banner.title ?? '',
   sub: banner.subtitle ?? '',
   cta: banner.ctaText ?? '',
   href: banner.ctaLink ?? '',
-  image: banner.imageUrl || banner.image || '',
+  desktopImage: banner.desktopImageUrl || banner.image || '',
+  mobileImage: banner.mobileImageUrl || banner.desktopImageUrl || banner.image || '',
   accent: banner.accent ?? 'from-[#39FF14]/20 via-transparent to-transparent',
 });
 
@@ -100,12 +100,17 @@ export default function HeroSection() {
       <div
         className={`absolute inset-0 transition-opacity duration-500 ${animating ? 'opacity-0' : 'opacity-100'}`}
       >
-        {slide.image ? (
-          <img
-            src={slide.image}
-            alt={slide.headline || 'Banner Vitally'}
-            className="w-full h-full object-cover"
-          />
+        {(slide.desktopImage || slide.mobileImage) ? (
+          <picture>
+            {slide.mobileImage && (
+              <source media="(max-width: 767px)" srcSet={slide.mobileImage} />
+            )}
+            <img
+              src={slide.desktopImage || slide.mobileImage}
+              alt="Banner Vitally"
+              className="w-full h-full object-cover"
+            />
+          </picture>
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-black via-black/80 to-black" />
         )}
@@ -120,11 +125,6 @@ export default function HeroSection() {
               <span className="text-[#39FF14] text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em]">
                 {slide.tag}
               </span>
-            )}
-            {slide.headline && (
-              <h1 className="text-white text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-none whitespace-pre-line">
-                {slide.headline}
-              </h1>
             )}
             {slide.sub && (
               <p className="text-white/60 text-sm sm:text-base lg:text-lg leading-relaxed">
