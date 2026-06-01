@@ -45,7 +45,7 @@ export function useImageUpload(): UseImageUploadReturn {
 
         const token = getAuthToken();
 
-        const res = await fetch(`${API_URL}/uploads/image`, {
+        const res = await fetch(`${API_URL}/api/v1/uploads/image`, {
           method: 'POST',
           headers: {
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
