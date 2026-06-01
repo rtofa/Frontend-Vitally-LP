@@ -1,31 +1,30 @@
 <![CDATA[<div align="center">
 
-# 🏋️ Vitally — Equipamentos de Academia
-
-**Landing page e e-commerce para equipamentos de academia comerciais e residenciais.**
-
-[![Next.js](https://img.shields.io/badge/Next.js-13.5-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-3178C6?logo=typescript)](https://typescriptlang.org/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.3-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
-[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker)](https://www.docker.com/)
-
+    <h1>🏋️ Vitally — Equipamentos de Academia</h1>
+    <p><strong>Landing page e e-commerce para equipamentos de academia comerciais e residenciais.</strong></p>
+    <p>
+        <a href="https://nextjs.org/"><img alt="Next.js" src="https://img.shields.io/badge/Next.js-13.5-black?logo=next.js"></a>
+        <a href="https://react.dev/"><img alt="React" src="https://img.shields.io/badge/React-18.2-61DAFB?logo=react"></a>
+        <a href="https://typescriptlang.org/"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.2-3178C6?logo=typescript"></a>
+        <a href="https://tailwindcss.com/"><img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-3.3-06B6D4?logo=tailwindcss"></a>
+        <a href="https://www.docker.com/"><img alt="Docker" src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker"></a>
+    </p>
 </div>
 
 ---
 
 ## 📋 Índice
 
-- [Visão Geral](#-visão-geral)
-- [Tech Stack](#-tech-stack)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Pré-requisitos](#-pré-requisitos)
-- [Instalação e Execução](#-instalação-e-execução)
-- [Variáveis de Ambiente](#-variáveis-de-ambiente)
-- [Arquitetura](#-arquitetura)
-- [Painel Administrativo](#-painel-administrativo)
-- [Deploy com Docker](#-deploy-com-docker)
-- [Scripts Disponíveis](#-scripts-disponíveis)
+- [Visão Geral](#visao-geral)
+- [Tech Stack](#tech-stack)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Pré-requisitos](#pre-requisitos)
+- [Instalação e Execução](#instalacao-e-execucao)
+- [Variáveis de Ambiente](#variaveis-de-ambiente)
+- [Arquitetura](#arquitetura)
+- [Painel Administrativo](#painel-administrativo)
+- [Deploy com Docker](#deploy-com-docker)
+- [Scripts Disponíveis](#scripts-disponiveis)
 
 ---
 
