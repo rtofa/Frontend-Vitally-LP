@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, ShoppingBag, User, Menu, X, Heart } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, X, Heart, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { getCategories } from '@/lib/services/categories';
 import type { Category } from '@/lib/api-types';
@@ -25,9 +25,9 @@ export default function Header() {
 
     const loadCategories = async () => {
       try {
-        const data = await getCategories();
+        const data = await getCategories(0, 100);
         if (!active) return;
-        setCategories(data.filter((category) => category.active !== false));
+        setCategories(data.content.filter((category) => category.active !== false));
       } catch (error) {
         if (active) setCategories([]);
       }
@@ -50,6 +50,9 @@ export default function Header() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
+  const visibleCategories = categories.slice(0, 6);
+  const hiddenCategories = categories.slice(6);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex flex-col">
       {/* Announcement bar */}
@@ -68,7 +71,8 @@ export default function Header() {
         } border-b border-white/5`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="flex items-center justify-between h-12 sm:h-16 gap-3 sm:gap-4">
+          {/* Tier 1: Top Bar (Logo, Search, Contact, Cart) */}
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-4 sm:gap-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0 group">
               <img
@@ -78,37 +82,20 @@ export default function Header() {
               />
             </Link>
 
-            {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-1">
-              {categories.map((cat) => (
-                <Link
-                  key={cat.id}
-                  href={`/shop?category=${cat.name}`}
-                  className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-md transition-all duration-150 whitespace-nowrap"
-                >
-                  {cat.name}
-                </Link>
-              ))}
-              <Link
-                href="/shop"
-                className="px-3 py-2 text-sm text-amber-400 hover:text-amber-300 hover:bg-white/5 rounded-md transition-all duration-150 font-medium"
-              >
-                Ofertas
-              </Link>
-            </div>
-
-            {/* Search + icons */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              {/* Desktop search bar */}
-              <div className="hidden md:flex items-center bg-white/8 border border-white/10 rounded-full px-4 h-9 gap-2 focus-within:border-amber-500/60 focus-within:bg-white/10 transition-all w-48 xl:w-64">
-                <Search size={14} className="text-white/40 shrink-0" />
+            {/* Desktop Search */}
+            <div className="hidden md:flex flex-1 max-w-2xl mx-auto">
+              <div className="flex items-center bg-white/8 border border-white/10 rounded-full px-5 h-11 w-full gap-3 focus-within:border-amber-500/60 focus-within:bg-white/10 transition-all">
+                <Search size={16} className="text-white/40 shrink-0" />
                 <input
                   type="text"
                   placeholder="Buscar equipamentos..."
                   className="bg-transparent text-sm text-white placeholder-white/30 outline-none w-full"
                 />
               </div>
+            </div>
 
+            {/* Actions (Contact + Cart + Mobile Search/Menu) */}
+            <div className="flex items-center gap-1 sm:gap-3 shrink-0">
               {/* Mobile search toggle */}
               <button
                 className="md:hidden p-2 text-white/70 hover:text-white hover:bg-white/8 rounded-full transition-all"
@@ -119,19 +106,19 @@ export default function Header() {
 
               <Link
                 href="/contato"
-                className="hidden md:inline-flex items-center h-9 px-4 rounded-full border border-[#39FF14]/40 text-[#39FF14] text-xs font-semibold uppercase tracking-widest hover:bg-[#39FF14] hover:text-black transition-colors"
+                className="hidden md:inline-flex items-center h-10 px-5 rounded-full border border-[#39FF14]/40 text-[#39FF14] text-xs font-bold uppercase tracking-widest hover:bg-[#39FF14] hover:text-black transition-colors"
               >
-                Contato
+                Fale Conosco
               </Link>
 
               <Link
                 href="/carrinho"
-                className="relative p-2 text-white/70 hover:text-white hover:bg-white/8 rounded-full transition-all"
+                className="relative p-2.5 text-white/70 hover:text-white hover:bg-white/8 rounded-full transition-all"
                 aria-label="Abrir carrinho"
               >
-                <ShoppingBag size={18} className="sm:w-5 sm:h-5" />
+                <ShoppingBag size={20} className="sm:w-5 sm:h-5" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4 min-w-[16px] px-1 rounded-full bg-[#39FF14] text-black text-[10px] font-bold flex items-center justify-center">
+                  <span className="absolute top-0 right-0 h-4.5 min-w-[18px] px-1 rounded-full bg-[#39FF14] text-black text-[10px] font-bold flex items-center justify-center border-2 border-black">
                     {totalItems}
                   </span>
                 )}
@@ -142,16 +129,59 @@ export default function Header() {
                 className="lg:hidden p-2 text-white/70 hover:text-white hover:bg-white/8 rounded-full transition-all"
                 onClick={() => setMenuOpen(!menuOpen)}
               >
-                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+                {menuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
             </div>
           </div>
 
-          {/* Mobile search */}
+          {/* Tier 2: Bottom Bar (Desktop Categories) */}
+          <div className="hidden lg:flex items-center gap-6 h-12 border-t border-white/5 relative z-40">
+            {visibleCategories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/shop?category=${cat.name}`}
+                className="text-[13px] font-semibold text-white/70 hover:text-white transition-colors whitespace-nowrap tracking-wide uppercase"
+              >
+                {cat.name}
+              </Link>
+            ))}
+
+            {hiddenCategories.length > 0 && (
+              <div className="relative group h-full flex items-center">
+                <button className="flex items-center gap-1.5 text-[13px] font-semibold text-white/70 hover:text-white transition-colors h-full tracking-wide uppercase">
+                  + Categorias <ChevronDown size={14} />
+                </button>
+                <div className="absolute top-full right-0 w-56 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-right group-hover:translate-y-0 translate-y-1">
+                  <div className="bg-neutral-950/95 backdrop-blur-2xl border border-white/10 rounded-xl p-2 shadow-2xl shadow-black overflow-hidden">
+                    {hiddenCategories.map((cat) => (
+                      <Link
+                        key={cat.id}
+                        href={`/shop?category=${cat.name}`}
+                        className="block px-4 py-2.5 text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors truncate tracking-wide"
+                      >
+                        {cat.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex-1" /> {/* Spacer */}
+            
+            <Link
+              href="/shop"
+              className="text-[13px] font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest flex items-center h-full"
+            >
+              Ofertas
+            </Link>
+          </div>
+
+          {/* Mobile search expanded */}
           {searchOpen && (
-            <div className="md:hidden pb-3">
-              <div className="flex items-center bg-white/8 border border-white/10 rounded-full px-4 h-10 gap-2 focus-within:border-amber-500/60 transition-all">
-                <Search size={14} className="text-white/40 shrink-0" />
+            <div className="md:hidden pb-4">
+              <div className="flex items-center bg-white/8 border border-white/10 rounded-full px-4 h-11 gap-3 focus-within:border-amber-500/60 transition-all">
+                <Search size={16} className="text-white/40 shrink-0" />
                 <input
                   type="text"
                   placeholder="Buscar equipamentos..."
@@ -179,7 +209,7 @@ export default function Header() {
                   <Link
                     key={cat.id}
                     href={`/shop?category=${cat.name}`}
-                    className="px-4 py-3.5 text-base text-white/70 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+                    className="px-4 py-3.5 text-base text-white/70 hover:text-white hover:bg-white/5 rounded-xl transition-all font-medium"
                     onClick={() => setMenuOpen(false)}
                   >
                     {cat.name}
@@ -187,7 +217,7 @@ export default function Header() {
                 ))}
                 <Link
                   href="/shop"
-                  className="px-4 py-3.5 text-base text-amber-400 font-medium hover:bg-white/5 rounded-xl transition-all"
+                  className="px-4 py-3.5 text-base text-amber-400 font-bold hover:bg-white/5 rounded-xl transition-all"
                   onClick={() => setMenuOpen(false)}
                 >
                   Ofertas
@@ -205,7 +235,7 @@ export default function Header() {
                     onClick={() => setMenuOpen(false)}
                     className="text-white/60 hover:text-white text-sm flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl transition-all"
                   >
-                    Contato
+                    Atendimento
                   </Link>
                 </div>
               </div>

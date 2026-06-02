@@ -10,7 +10,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
     <CartProvider>
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
-        <main className="flex-1 pt-[72px] sm:pt-[88px]">{children}</main>
+        <main className="flex-1 pt-[104px] lg:pt-[160px]">{children}</main>
         <Footer />
       </div>
       <CartDrawer />
