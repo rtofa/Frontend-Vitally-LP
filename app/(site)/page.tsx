@@ -1,15 +1,16 @@
 import HeroSection from '@/components/home/HeroSection';
 import PerksStrip from '@/components/home/PerksStrip';
-import CategoryBanner from '@/components/home/CategoryBanner';
-import FeaturedProducts from '@/components/home/FeaturedProducts';
+import ProductGridSection from '@/components/home/ProductGridSection';
+import CategoryCarousel from '@/components/home/CategoryCarousel';
 
 export default function Home() {
   return (
     <>
       <HeroSection />
       <PerksStrip />
-      <CategoryBanner />
-      <FeaturedProducts />
+      <ProductGridSection title="Lançamentos" subtitle="Novidades" categoryFilterName="Lançamentos" />
+      <CategoryCarousel />
+      <ProductGridSection title="Destaques" subtitle="Populares" categoryFilterName="Destaques" />
     </>
   );
 }

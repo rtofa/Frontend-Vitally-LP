@@ -13,7 +13,13 @@ const formatPrice = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-export default function FeaturedProducts() {
+interface ProductGridSectionProps {
+  title: React.ReactNode;
+  subtitle: string;
+  categoryFilterName: string;
+}
+
+export default function ProductGridSection({ title, subtitle, categoryFilterName }: ProductGridSectionProps) {
   const [products, setProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +31,17 @@ export default function FeaturedProducts() {
       try {
         const data = await getProducts();
         if (!active) return;
-        setProducts(data.slice(0, 8));
+        
+        // Filtro 1: Apenas produtos ativos usando o fallback seguro (isActive ?? active)
+        const activeProducts = data.filter(p => (p.isActive ?? p.active) !== false);
+        
+        // Filtro 2: Filtragem iterativa pela categoria requisitada
+        const filtered = activeProducts.filter(p => {
+          const catName = typeof p.category === 'string' ? p.category : p.category?.name;
+          return catName?.toLowerCase() === categoryFilterName.toLowerCase();
+        });
+        
+        setProducts(filtered.slice(0, 8)); // Pega os primeiros 8 para fechar o grid 4x2
       } catch (err) {
         if (!active) return;
         setError('Não foi possível carregar os produtos agora.');
@@ -39,22 +55,26 @@ export default function FeaturedProducts() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [categoryFilterName]);
+
+  // Regra de negócio: Se não houver produtos dessa categoria, não exiba a seção vazia.
+  if (!loading && !error && products.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative z-10 py-12 sm:py-20 max-w-7xl mx-auto px-4 lg:px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-10">
         <div>
           <span className="text-[#39FF14] text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-1 sm:mb-2 block">
-            Destaques
+            {subtitle}
           </span>
           <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-none">
-            Equipamentos<br />
-            <span className="text-gradient">em destaque</span>
+            {title}
           </h2>
         </div>
         <Link
-          href="/shop"
+          href={`/shop?category=${categoryFilterName}`}
           className="flex items-center gap-2 text-white/50 hover:text-[#39FF14] text-xs sm:text-sm font-medium transition-colors group"
         >
           Ver todos
