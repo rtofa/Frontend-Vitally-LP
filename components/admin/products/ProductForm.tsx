@@ -89,7 +89,6 @@ export default function ProductForm({ categories, initialData, onSubmit, submitt
             onChange={(e) => set('price', e.target.value)}
             placeholder="Ex: 12999.90"
             className={inputClass}
-            required
           />
         </div>
       </div>
