@@ -13,7 +13,7 @@ export default function EditProductPage() {
   const router = useRouter();
   const id = params.id as string;
   const { findById, edit, saving } = useProducts();
-  const { items: categories } = useCategories();
+  const { items: categories } = useCategories(100);
 
   const [product, setProduct] = useState<ApiProduct | null>(null);
   const [loading, setLoading] = useState(true);

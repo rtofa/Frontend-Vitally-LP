@@ -1,13 +1,18 @@
 import api from '../api';
 import type { Category, CategoryCreatePayload, CategoryUpdatePayload } from '../api-types';
 
-export async function getCategories(): Promise<Category[]> {
-  const { data } = await api.get('/categories');
+export async function getCategories(page = 0, size = 10) {
+  const { data } = await api.get(`/categories?page=${page}&size=${size}`);
   
   if (Array.isArray(data)) {
-    return data;
+    return { content: data, totalPages: 1, currentPage: 0 };
   }
-  return data?.content ?? [];
+  
+  return {
+    content: data?.content ?? [],
+    totalPages: data?.totalPages ?? 1,
+    currentPage: data?.currentPage ?? data?.number ?? 0,
+  };
 }
 
 export async function createCategory(payload: CategoryCreatePayload): Promise<Category> {

@@ -6,7 +6,7 @@ import CategoryTable from '@/components/admin/categories/CategoryTable';
 import type { Category, CategoryCreatePayload } from '@/lib/api-types';
 
 export default function CategoriesPage() {
-  const { items, loading, error, saving, actionId, load, create, toggleStatus, remove } =
+  const { items, loading, error, saving, actionId, load, create, toggleStatus, remove, currentPage, totalPages, nextPage, prevPage } =
     useCategories();
 
   const handleSubmit = async (payload: CategoryCreatePayload) => {
@@ -41,6 +41,10 @@ export default function CategoriesPage() {
         actionId={actionId}
         onToggleStatus={toggleStatus}
         onDelete={handleDelete}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onNextPage={nextPage}
+        onPrevPage={prevPage}
       />
     </div>
   );

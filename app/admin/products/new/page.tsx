@@ -10,7 +10,7 @@ import type { ProductCreatePayload } from '@/lib/api-types';
 export default function NewProductPage() {
   const router = useRouter();
   const { create, saving } = useProducts();
-  const { items: categories } = useCategories();
+  const { items: categories } = useCategories(100);
 
   const handleSubmit = async (payload: ProductCreatePayload) => {
     await create(payload);

@@ -13,30 +13,34 @@ import {
 } from '@/lib/services/categories';
 import type { Category, CategoryCreatePayload, CategoryUpdatePayload } from '@/lib/api-types';
 
-export function useCategories() {
+export function useCategories(defaultSize = 10) {
   const [items, setItems] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [actionId, setActionId] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (pageToLoad = currentPage) => {
     setLoading(true);
     setError('');
     try {
-      const data = await getCategories();
-      setItems(data);
+      const data = await getCategories(pageToLoad, defaultSize);
+      setItems(data.content);
+      setCurrentPage(data.currentPage);
+      setTotalPages(data.totalPages);
     } catch {
       setError('Erro ao carregar categorias.');
       toast.error('Erro ao carregar categorias do servidor.');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentPage, defaultSize]);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    load(currentPage);
+  }, [currentPage]); // automatically fetches when currentPage changes
 
   const create = async (payload: CategoryCreatePayload) => {
     setSaving(true);
@@ -100,6 +104,9 @@ export function useCategories() {
 
   const findById = async (id: string) => getCategory(id);
 
+  const nextPage = () => setCurrentPage((p) => (p < totalPages - 1 ? p + 1 : p));
+  const prevPage = () => setCurrentPage((p) => (p > 0 ? p - 1 : p));
+
   return {
     items,
     loading,
@@ -112,5 +119,9 @@ export function useCategories() {
     toggleStatus,
     remove,
     findById,
+    currentPage,
+    totalPages,
+    nextPage,
+    prevPage,
   };
 }
