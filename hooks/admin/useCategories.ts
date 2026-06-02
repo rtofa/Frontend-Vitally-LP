@@ -75,13 +75,13 @@ export function useCategories(defaultSize = 10) {
   const toggleStatus = async (category: Category) => {
     setActionId(category.id);
     try {
-      if (category.active) {
+      if (category.isActive ?? category.active) {
         await deactivateCategory(category.id);
       } else {
         await activateCategory(category.id);
       }
       await load();
-      toast.success(category.active ? 'Categoria desativada.' : 'Categoria ativada.');
+      toast.success((category.isActive ?? category.active) ? 'Categoria desativada.' : 'Categoria ativada.');
     } catch {
       toast.error('Erro ao atualizar o status da categoria.');
     } finally {

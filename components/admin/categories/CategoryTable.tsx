@@ -72,10 +72,10 @@ export default function CategoryTable({
               <div className="flex flex-wrap items-center gap-2 sm:justify-end">
                 <span
                   className={`text-xs font-bold uppercase tracking-widest ${
-                    category.active ? 'text-[#39FF14]' : 'text-white/40'
+                    (category.isActive ?? category.active) ? 'text-[#39FF14]' : 'text-white/40'
                   }`}
                 >
-                  {category.active ? 'Ativo' : 'Inativo'}
+                  {(category.isActive ?? category.active) ? 'Ativo' : 'Inativo'}
                 </span>
                 <Link
                   href={`/admin/categories/${category.id}/edit`}
@@ -89,7 +89,7 @@ export default function CategoryTable({
                   disabled={actionId === category.id}
                   className="h-8 px-3 rounded-full border border-white/15 text-white/60 text-xs font-semibold hover:text-white hover:border-[#39FF14]/60 hover:bg-[#39FF14]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {category.active ? 'Desativar' : 'Ativar'}
+                  {(category.isActive ?? category.active) ? 'Desativar' : 'Ativar'}
                 </button>
                 <button
                   type="button"

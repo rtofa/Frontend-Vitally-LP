@@ -79,11 +79,11 @@ export default function ShopClient() {
       try {
         const [productsData, categoriesData] = await Promise.all([
           getProducts(),
-          getCategories(),
+          getCategories(0, 100),
         ]);
         if (!active) return;
         setProducts(productsData);
-        setCategories(categoriesData.filter((category) => category.active !== false));
+        setCategories(categoriesData.content.filter((category: Category) => (category.isActive ?? category.active) !== false));
       } catch (err) {
         if (active) setError('Não foi possível carregar o catálogo.');
       } finally {

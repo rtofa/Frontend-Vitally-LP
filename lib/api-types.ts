@@ -54,6 +54,7 @@ export interface ApiProduct {
   image?: string;
   inStock?: boolean;
   active?: boolean;
+  isActive?: boolean;
   status?: string;
 }
 
@@ -88,6 +89,7 @@ export interface Banner {
   image?: string;
   accent?: string;
   active?: boolean;
+  isActive?: boolean;
   status?: string;
   displayOrder?: number;
 }

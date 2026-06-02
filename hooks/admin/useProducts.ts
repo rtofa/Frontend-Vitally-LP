@@ -80,16 +80,18 @@ export function useProducts(paginated = false) {
   };
 
   const toggleStatus = async (product: ApiProduct) => {
-    if (typeof product.id === 'undefined' || typeof product.active !== 'boolean') return;
+    setActionId(product.id as string);
+    const isActive = product.isActive ?? product.active;
+    if (typeof product.id === 'undefined' || typeof isActive !== 'boolean') return;
     setActionId(product.id);
     try {
-      if (product.active) {
+      if (isActive) {
         await deactivateProduct(product.id);
       } else {
         await activateProduct(product.id);
       }
       await load();
-      toast.success(product.active ? 'Produto desativado.' : 'Produto ativado.');
+      toast.success(isActive ? 'Produto desativado.' : 'Produto ativado.');
     } catch {
       toast.error('Erro ao atualizar o status do produto.');
     } finally {

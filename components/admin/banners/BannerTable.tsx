@@ -5,8 +5,8 @@ import type { Banner } from '@/lib/api-types';
 
 // Helper: resolve o status ativo de forma tolerante a inconsistências da API Spring Boot
 const resolveBannerActive = (banner: Banner): boolean => {
-  if (typeof banner.active === 'boolean') return banner.active;
-  if (typeof (banner as any).isActive === 'boolean') return (banner as any).isActive;
+  const active = banner.isActive ?? banner.active;
+  if (typeof active === 'boolean') return active;
   if (banner.status) {
     const normalized = banner.status.toLowerCase();
     if (normalized.includes('active') && !normalized.includes('inactive')) return true;
@@ -88,10 +88,8 @@ export default function BannerTable({
                   </td>
                   <td className="px-6 py-4 text-white/70 text-sm">{banner.tag || '--'}</td>
                   <td className="px-6 py-4">
-                    <span className={`text-xs font-semibold uppercase tracking-widest px-2 py-1 rounded ${
-                      active
-                        ? 'text-[#39FF14] bg-[#39FF14]/10'
-                        : 'text-white/40 bg-white/5'
+                    <span className={`text-xs font-bold uppercase tracking-widest ${
+                      active ? 'text-[#39FF14]' : 'text-white/40'
                     }`}>
                       {active ? 'Ativo' : 'Inativo'}
                     </span>

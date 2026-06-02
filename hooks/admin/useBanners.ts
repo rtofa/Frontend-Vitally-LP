@@ -68,9 +68,9 @@ export function useBanners() {
   };
 
   const toggleStatus = async (banner: Banner) => {
-    if (typeof banner.id === 'undefined') return;
-    const isActive = typeof banner.active === 'boolean' ? banner.active : false;
-    setActionId(banner.id);
+    if (!banner.id) return;
+    setActionId(banner.id.toString());
+    const isActive = banner.isActive ?? banner.active ?? false;
     try {
       await updateBannerStatus(banner.id, { active: !isActive });
       await load();

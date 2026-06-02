@@ -10,8 +10,9 @@ const getProductName = (product: ApiProduct) =>
   product.productName ?? product.name ?? 'Produto sem nome';
 
 const getStatus = (product: ApiProduct) => {
-  if (typeof product.active === 'boolean') {
-    return product.active
+  const active = product.isActive ?? product.active;
+  if (typeof active === 'boolean') {
+    return active
       ? { label: 'Ativo', className: 'text-[#39FF14] bg-[#39FF14]/10' }
       : { label: 'Inativo', className: 'text-rose-400 bg-rose-500/10' };
   }
@@ -82,7 +83,7 @@ export default function ProductTable({
 
             {!loading && !error && items.map((product) => {
               const status = getStatus(product);
-              const active = typeof product.active === 'boolean' ? product.active : undefined;
+              const active = product.isActive ?? product.active;
               return (
                 <tr key={product.id} className="hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4">
