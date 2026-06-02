@@ -6,7 +6,7 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import ImageUploadField from '@/components/admin/ImageUploadField';
 
 type Props = {
-  initialData?: Pick<Category, 'name' | 'imageUrl' | 'active'> | null;
+  initialData?: Pick<Category, "name" | "active" | "isActive" | "imageUrl"> | null;
   onSubmit: (payload: CategoryCreatePayload) => Promise<void>;
   submitting?: boolean;
 };
