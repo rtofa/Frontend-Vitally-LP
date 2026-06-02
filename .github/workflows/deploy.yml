@@ -23,8 +23,8 @@ jobs:
       - name: Build e Push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           tags: ghcr.io/rtofa/vitally-frontend:main
 
