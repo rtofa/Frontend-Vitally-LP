@@ -25,7 +25,8 @@ export interface Category {
   id: string;
   name: string;
   imageUrl: string;
-  active: boolean;
+  active?: boolean;
+  isActive?: boolean;
 }
 
 export interface CategoryCreatePayload {

@@ -27,7 +27,7 @@ export default function Header() {
       try {
         const data = await getCategories(0, 100);
         if (!active) return;
-        setCategories(data.content.filter((category) => category.active !== false));
+        setCategories(data.content.filter((category: Category) => (category.isActive ?? category.active) !== false));
       } catch (error) {
         if (active) setCategories([]);
       }
