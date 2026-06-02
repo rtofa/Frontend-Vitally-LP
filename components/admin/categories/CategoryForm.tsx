@@ -25,7 +25,7 @@ export default function CategoryForm({ initialData, onSubmit, submitting }: Prop
       setForm({
         name: initialData.name,
         imageUrl: initialData.imageUrl,
-        active: initialData.active,
+        active: initialData.isActive ?? initialData.active ?? true,
       });
     }
   }, [initialData]);
