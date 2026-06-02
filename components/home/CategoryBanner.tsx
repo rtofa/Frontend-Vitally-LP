@@ -19,7 +19,7 @@ export default function CategoryBanner() {
       try {
         const data = await getCategories();
         if (!active) return;
-        setCategories(data.filter((category) => category.active !== false));
+        setCategories(data.content.filter((category) => category.active !== false));
       } catch (err) {
         if (active) setError('Não foi possível carregar as categorias.');
       } finally {
