@@ -59,19 +59,19 @@ export interface ApiProduct {
 }
 
 export interface ProductCreatePayload {
-  productName: string;
-  productDescription: string;
+  name: string;
+  description?: string;
   imageUrl: string;
-  price: number;
+  price: number | null;
   displayOrder: number;
   categoryId: string;
 }
 
 export interface ProductUpdatePayload {
-  productName?: string;
-  productDescription?: string;
+  name?: string;
+  description?: string;
   imageUrl?: string;
-  price?: number;
+  price?: number | null;
   displayOrder?: number;
   categoryId?: string;
   active?: boolean;

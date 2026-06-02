@@ -52,11 +52,16 @@ export default function ProductForm({ categories, initialData, onSubmit, submitt
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Tratamento condicional do preço: se vazio ou 0, envia null para respeitar a anotação @Positive no backend
+    const priceValue = form.price.trim() === '' ? null : Number(form.price);
+    const parsedPrice = priceValue === 0 ? null : priceValue;
+
     await onSubmit({
-      productName: form.name,
-      productDescription: form.description,
+      name: form.name,
+      description: form.description,
       imageUrl: form.imageUrl,
-      price: Number(form.price),
+      price: parsedPrice,
       displayOrder: Number(form.displayOrder),
       categoryId: form.categoryId,
     });
