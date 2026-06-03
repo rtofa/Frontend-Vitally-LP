@@ -34,7 +34,7 @@ export default function BannersPage() {
           </button>
           <Link
             href="/admin/banners/new"
-            className="h-11 px-6 rounded-xl bg-[#39FF14] text-black text-sm font-bold uppercase tracking-wider hover:bg-[#53FF2E] transition-colors"
+            className="h-11 px-6 flex items-center justify-center rounded-xl bg-[#39FF14] text-black text-sm font-bold uppercase tracking-wider hover:bg-[#53FF2E] transition-colors"
           >
             Novo banner
           </Link>

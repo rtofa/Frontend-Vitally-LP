@@ -27,6 +27,10 @@ type Props = {
   actionId?: string | number | null;
   onToggleStatus: (product: ApiProduct) => void;
   onDelete: (product: ApiProduct) => void;
+  currentPage?: number;
+  totalPages?: number;
+  onNextPage?: () => void;
+  onPrevPage?: () => void;
 };
 
 export default function ProductTable({
@@ -36,6 +40,10 @@ export default function ProductTable({
   actionId,
   onToggleStatus,
   onDelete,
+  currentPage,
+  totalPages,
+  onNextPage,
+  onPrevPage,
 }: Props) {
   return (
     <div className="glass-card rounded-2xl overflow-hidden">
@@ -137,6 +145,31 @@ export default function ProductTable({
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      {!loading && !error && (totalPages ?? 0) > 1 && (
+        <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
+          <div className="text-white/40 text-xs font-medium">
+            Página {(currentPage ?? 0) + 1} de {totalPages}
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={onPrevPage}
+              disabled={(currentPage ?? 0) === 0}
+              className="h-8 px-4 rounded-full border border-white/15 text-white/70 text-xs font-semibold hover:text-white hover:border-[#39FF14]/60 hover:bg-[#39FF14]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Página anterior
+            </button>
+            <button
+              onClick={onNextPage}
+              disabled={(currentPage ?? 0) >= (totalPages ?? 1) - 1}
+              className="h-8 px-4 rounded-full border border-white/15 text-white/70 text-xs font-semibold hover:text-white hover:border-[#39FF14]/60 hover:bg-[#39FF14]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Próxima página
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

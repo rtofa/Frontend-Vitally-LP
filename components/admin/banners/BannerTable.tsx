@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import Link from 'next/link';
 import type { Banner } from '@/lib/api-types';
 
@@ -32,6 +34,14 @@ export default function BannerTable({
   onToggleStatus,
   onDelete,
 }: Props) {
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10;
+  const totalPages = Math.max(1, Math.ceil(items.length / itemsPerPage));
+  const paginatedItems = items.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+  const onNextPage = () => setCurrentPage((p) => Math.min(totalPages - 1, p + 1));
+  const onPrevPage = () => setCurrentPage((p) => Math.max(0, p - 1));
+
   return (
     <div className="glass-card rounded-2xl overflow-hidden">
       <div className="px-6 py-4 border-b border-white/10">
@@ -76,7 +86,7 @@ export default function BannerTable({
               </tr>
             )}
 
-            {!loading && !error && items.map((banner) => {
+            {!loading && !error && paginatedItems.map((banner) => {
               const active = resolveBannerActive(banner);
               return (
                 <tr key={banner.id} className="hover:bg-white/5 transition-colors">
@@ -127,6 +137,31 @@ export default function BannerTable({
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      {!loading && !error && totalPages > 1 && (
+        <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
+          <div className="text-white/40 text-xs font-medium">
+            Página {currentPage + 1} de {totalPages}
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={onPrevPage}
+              disabled={currentPage === 0}
+              className="h-8 px-4 rounded-full border border-white/15 text-white/70 text-xs font-semibold hover:text-white hover:border-[#39FF14]/60 hover:bg-[#39FF14]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Página anterior
+            </button>
+            <button
+              onClick={onNextPage}
+              disabled={currentPage >= totalPages - 1}
+              className="h-8 px-4 rounded-full border border-white/15 text-white/70 text-xs font-semibold hover:text-white hover:border-[#39FF14]/60 hover:bg-[#39FF14]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Próxima página
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
