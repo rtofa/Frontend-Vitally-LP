@@ -113,7 +113,9 @@ export default function ShopClient() {
   }, [sidebarOpen]);
 
   const priceStats = useMemo(() => {
-    const prices = products.map((product) => product.price).filter((price) => typeof price === 'number');
+    const prices = products
+      .map((product) => product.price)
+      .filter((price): price is number => typeof price === 'number' && price > 0);
     if (prices.length === 0) {
       return { min: 0, max: 0 };
     }
@@ -167,15 +169,25 @@ export default function ShopClient() {
     }
     if (filters.priceRange[1] > 0) {
       list = list.filter(
-        (product) => product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1]
+        (product) => product.price == null || (product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1])
       );
     }
     switch (sort) {
       case 'price-asc':
-        list.sort((a, b) => a.price - b.price);
+        list.sort((a, b) => {
+          if (a.price == null && b.price == null) return 0;
+          if (a.price == null) return 1;
+          if (b.price == null) return -1;
+          return a.price - b.price;
+        });
         break;
       case 'price-desc':
-        list.sort((a, b) => b.price - a.price);
+        list.sort((a, b) => {
+          if (a.price == null && b.price == null) return 0;
+          if (a.price == null) return 1;
+          if (b.price == null) return -1;
+          return b.price - a.price;
+        });
         break;
       case 'newest':
         list.sort((a, b) => {
