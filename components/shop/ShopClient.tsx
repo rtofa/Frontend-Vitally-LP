@@ -161,10 +161,12 @@ export default function ShopClient() {
     let list = [...products];
     if (filters.categories.length > 0) {
       list = list.filter((product) => {
-        const categoryName = typeof product.category === 'string'
-          ? product.category
-          : product.category?.name;
-        return categoryName ? filters.categories.includes(categoryName) : false;
+        const catName =
+          product.categoryName ??
+          (typeof product.category === 'string'
+            ? product.category
+            : product.category?.name);
+        return catName ? filters.categories.includes(catName) : false;
       });
     }
     if (filters.priceRange[1] > 0) {

@@ -49,6 +49,8 @@ export interface ApiProduct {
   price: number;
   displayOrder?: number;
   category?: Category | string;
+  categoryId?: string;
+  categoryName?: string;
   name?: string;
   description?: string;
   image?: string;
