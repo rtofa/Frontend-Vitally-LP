@@ -5,17 +5,21 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Vitally — Equipamentos de academia',
-  description: 'Equipamentos de academia comerciais e residenciais para força, cardio e treino funcional.',
+  title: 'Vitally | Equipamentos de Academia Premium',
+  description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação e Financiamento em até 240x.',
   icons: {
     icon: '/Icon/Icone1.svg',
   },
   openGraph: {
-    images: [{ url: 'https://bolt.new/static/og_default.png' }],
+    title: 'Vitally | Equipamentos de Academia Premium',
+    description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação e Financiamento em até 240x.',
+    images: [{ url: '/opengraph-image.jpg' }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://bolt.new/static/og_default.png' }],
+    title: 'Vitally | Equipamentos de Academia Premium',
+    description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação e Financiamento em até 240x.',
+    images: [{ url: '/opengraph-image.jpg' }],
   },
 };
 
