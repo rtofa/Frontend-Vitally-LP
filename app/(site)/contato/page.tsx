@@ -315,7 +315,7 @@ export default function ContatoPage() {
                       ? 'border-rose-500 focus:border-rose-500'
                       : 'border-white/10 focus:border-[#39FF14]/60'
                   } text-white placeholder-white/30 outline-none transition-colors`}
-                  placeholder="(11) 99999-9999"
+                  placeholder="(17) 3214-8585"
                   required
                 />
                 {fieldErrors.phone && (
@@ -437,16 +437,16 @@ export default function ContatoPage() {
               <div className="text-[#39FF14] text-sm font-bold uppercase tracking-widest mb-2">
                 Telefone
               </div>
-              <a href="tel:+5511999999999" className="text-white hover:text-[#39FF14] transition-colors">
-                +55 (11) 99999-9999
+              <a href="tel:+551732148585" className="text-white hover:text-[#39FF14] transition-colors">
+                (17) 3214-8585
               </a>
             </div>
             <div>
               <div className="text-[#39FF14] text-sm font-bold uppercase tracking-widest mb-2">
                 E-mail
               </div>
-              <a href="mailto:contato@vitally.com" className="text-white hover:text-[#39FF14] transition-colors">
-                contato@vitally.com
+              <a href="mailto:contato@vitally.com.br" className="text-white hover:text-[#39FF14] transition-colors">
+                contato@vitally.com.br
               </a>
             </div>
             <div>

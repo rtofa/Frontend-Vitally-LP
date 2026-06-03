@@ -218,7 +218,7 @@ export default function Header() {
           {/* Tier 2: Bottom Bar (Priority+ Navigation) */}
           <div 
             ref={containerRef}
-            className="hidden lg:flex items-center gap-6 h-12 border-t border-white/5 relative z-40 overflow-hidden"
+            className="hidden lg:flex items-center gap-6 h-12 border-t border-white/5 relative z-40"
           >
             {visibleCategories.map((cat) => (
               <Link

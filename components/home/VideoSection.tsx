@@ -7,7 +7,7 @@ export default function VideoSection() {
             Conheça Nossa <span className="text-gradient">História</span>
           </h2>
         </div>
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full">
           <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10 glass-card">
             <iframe
               src="https://www.youtube.com/embed/vEQ9tojPTTA"
