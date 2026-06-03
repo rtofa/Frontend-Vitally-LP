@@ -140,9 +140,7 @@ export default function Header() {
 
       {/* Announcement bar */}
       <div className="bg-amber-500 text-black text-[10px] sm:text-xs font-semibold text-center py-1.5 sm:py-2 px-4 tracking-widest uppercase leading-tight">
-        Entrega grátis acima de R$1999 &nbsp;|&nbsp; Código&nbsp;
-        <span className="underline cursor-pointer">LUMINA20</span>
-        &nbsp;para 20% off
+        45 Dias de Fabricação &nbsp;|&nbsp; Financiamento em até 240x
       </div>
 
       {/* Main nav */}

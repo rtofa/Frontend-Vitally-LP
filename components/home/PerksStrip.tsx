@@ -1,10 +1,10 @@
 import { Truck, RotateCcw, Shield, Headphones } from 'lucide-react';
 
 const perks = [
-  { icon: Truck, title: 'Entrega grátis', desc: 'Pedidos acima de R$1999' },
-  { icon: RotateCcw, title: 'Troca fácil', desc: '30 dias sem complicação' },
-  { icon: Shield, title: 'Garantia de 2 anos', desc: 'Cobertura inclusa' },
-  { icon: Headphones, title: 'Suporte 24/7', desc: 'Sempre com você' },
+  { icon: Truck, title: 'Fabricação Própria', desc: 'Direto de nossa indústria' },
+  { icon: RotateCcw, title: '45 Dias de Fabricação', desc: 'Equipamentos sob medida' },
+  { icon: Shield, title: 'Financiamento em até 240x', desc: 'Condições exclusivas de crédito' },
+  { icon: Headphones, title: 'Suporte Especializado', desc: 'Conte com nossa equipe' },
 ];
 
 export default function PerksStrip() {
