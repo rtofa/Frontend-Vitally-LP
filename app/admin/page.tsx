@@ -97,13 +97,47 @@ export default function AdminDashboardPage() {
         )}
       </section>
 
-      <section className="glass-card rounded-2xl p-6">
-        <h2 className="text-white text-lg font-bold">Próximas ações</h2>
-        <ul className="mt-4 space-y-2 text-white/60 text-sm">
-          <li>• Revise os últimos leads cadastrados e responda aos orçamentos.</li>
-          <li>• Verifique a atividade do catálogo e atualize produtos inativos.</li>
-          <li>• Monitore o desempenho das campanhas de banners.</li>
-        </ul>
+      <section className="glass-card rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center justify-between">
+        <div className="space-y-4 flex-1">
+          <div>
+            <h2 className="text-white text-lg font-bold">
+              Precisa de ajuda ou encontrou algum bug?
+            </h2>
+            <p className="text-white/60 text-sm mt-1">
+              Nossa equipe técnica está à disposição para garantir que sua operação não pare.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/5514997811200?text=Olá,%20preciso%20de%20suporte%20no%20painel%20da%20Vitally."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 text-sm font-bold uppercase tracking-wider hover:bg-amber-500/20 transition-colors"
+          >
+            Reportar Bug
+          </a>
+        </div>
+        
+        <div className="hidden md:block w-px h-24 bg-white/10" />
+        <div className="md:hidden w-full h-px bg-white/10" />
+
+        <div className="space-y-4 flex-1">
+          <div>
+            <h2 className="text-white text-lg font-bold">
+              Deseja implementar novas funcionalidades?
+            </h2>
+            <p className="text-white/60 text-sm mt-1">
+              Converse com nossa equipe de engenharia para escalar ainda mais a sua plataforma.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/5514997811200?text=Olá,%20gostaria%20de%20orçar%20uma%20nova%20funcionalidade%20para%20a%20Vitally."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center h-11 px-6 rounded-xl border border-white/15 text-white/70 text-sm font-bold uppercase tracking-wider hover:text-white hover:border-[#39FF14]/60 hover:bg-[#39FF14]/10 transition-colors"
+          >
+            Solicitar Funcionalidade
+          </a>
+        </div>
       </section>
     </div>
   );
