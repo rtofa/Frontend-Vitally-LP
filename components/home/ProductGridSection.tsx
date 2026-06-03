@@ -37,7 +37,7 @@ export default function ProductGridSection({ title, subtitle, categoryFilterName
         
         // Filtro 2: Filtragem iterativa pela categoria requisitada
         const filtered = activeProducts.filter(p => {
-          const catName = typeof p.category === 'string' ? p.category : p.category?.name;
+          const catName = p.categoryName ?? (typeof p.category === 'string' ? p.category : p.category?.name);
           return catName?.toLowerCase() === categoryFilterName.toLowerCase();
         });
         
