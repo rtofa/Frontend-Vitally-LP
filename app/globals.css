@@ -42,11 +42,8 @@
   }
 
   body {
-    @apply text-foreground;
-    background-color: #0f0f0f;
+    @apply text-foreground bg-[#0f0f0f] bg-cover bg-no-repeat bg-center bg-fixed;
     background-image: url('/500x500.jpg.jpeg');
-    background-repeat: repeat;
-    background-size: 500px 500px;
     min-height: 100vh;
   }
 
