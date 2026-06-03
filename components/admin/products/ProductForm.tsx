@@ -13,6 +13,7 @@ type Props = {
     imageUrl?: string;
     price?: number;
     displayOrder?: number;
+    categoryId?: string;
     category?: string | { id: string; name: string };
   } | null;
   onSubmit: (payload: ProductCreatePayload) => Promise<void>;
@@ -40,9 +41,10 @@ export default function ProductForm({ categories, initialData, onSubmit, submitt
         price: String(initialData.price ?? ''),
         displayOrder: String(initialData.displayOrder ?? 0),
         categoryId:
-          typeof initialData.category === 'string'
+          initialData.categoryId ||
+          (typeof initialData.category === 'string'
             ? initialData.category
-            : initialData.category?.id || '',
+            : initialData.category?.id) || '',
       });
     }
   }, [initialData]);
@@ -54,8 +56,8 @@ export default function ProductForm({ categories, initialData, onSubmit, submitt
     e.preventDefault();
     
     // Tratamento condicional do preço: se vazio ou 0, envia null para respeitar a anotação @Positive no backend
-    const priceValue = form.price.trim() === '' ? null : Number(form.price);
-    const parsedPrice = priceValue === 0 ? null : priceValue;
+    const finalPrice = form.price.toString().trim() === '' ? null : Number(form.price);
+    const parsedPrice = finalPrice === 0 ? null : finalPrice;
 
     await onSubmit({
       name: form.name,
