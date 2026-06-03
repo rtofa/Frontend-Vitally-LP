@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { getCategories } from '@/lib/services/categories';
@@ -13,6 +13,12 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const { totalItems } = useCart();
+
+  // SSR Safe Default - Renderiza 6 no servidor para evitar Hydration Mismatch
+  const [visibleCount, setVisibleCount] = useState(6);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const ghostRef = useRef<HTMLDivElement>(null);
+  const itemWidths = useRef<number[]>([]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -50,11 +56,88 @@ export default function Header() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const visibleCategories = categories.slice(0, 6);
-  const hiddenCategories = categories.slice(6);
+  // Medição do Menu Fantasma (Executa quando as categorias carregam)
+  useEffect(() => {
+    if (categories.length > 0 && ghostRef.current) {
+      const children = Array.from(ghostRef.current.children) as HTMLElement[];
+      itemWidths.current = children.map(child => child.offsetWidth);
+    }
+  }, [categories]);
+
+  // Priority+ Navigation Cálculo (Resize Observer com Debounce / RAF)
+  useEffect(() => {
+    if (typeof window === 'undefined' || itemWidths.current.length === 0) return;
+
+    let rafId: number;
+
+    const calculateVisibleItems = (containerWidth: number) => {
+      // Largura estimada: Botão "+ Categorias" (~120px) + "OFERTAS" (~80px) + flex gaps e segurança = 260px
+      const bufferSpace = 260; 
+      let availableSpace = containerWidth - bufferSpace;
+      let count = 0;
+
+      for (let i = 0; i < itemWidths.current.length; i++) {
+        const itemWidth = itemWidths.current[i];
+        // Considera o gap-6 (24px) do flexbox para cada item extra
+        const spaceNeeded = i === 0 ? itemWidth : itemWidth + 24; 
+        
+        if (availableSpace >= spaceNeeded) {
+          availableSpace -= spaceNeeded;
+          count++;
+        } else {
+          break;
+        }
+      }
+
+      // Se der pra caber todos com o espaço do botão de dropdown sobrando, exibe todos
+      if (count >= categories.length) {
+        setVisibleCount(categories.length);
+      } else {
+        setVisibleCount(Math.max(1, count)); // Sempre garante no mínimo 1
+      }
+    };
+
+    const observer = new ResizeObserver((entries) => {
+      if (entries.length > 0) {
+        const entry = entries[0];
+        if (rafId) cancelAnimationFrame(rafId);
+        
+        rafId = requestAnimationFrame(() => {
+          calculateVisibleItems(entry.contentRect.width);
+        });
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+      // Força cálculo imediato na montagem
+      calculateVisibleItems(containerRef.current.offsetWidth);
+    }
+
+    return () => {
+      observer.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [categories]);
+
+  const visibleCategories = categories.slice(0, visibleCount);
+  const hiddenCategories = categories.slice(visibleCount);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex flex-col">
+      {/* Menu Fantasma para Medição de Largura */}
+      <div 
+        ref={ghostRef} 
+        className="absolute top-0 left-0 opacity-0 pointer-events-none invisible flex gap-6"
+        aria-hidden="true"
+      >
+        {categories.map(cat => (
+          <div key={`ghost-${cat.id}`} className="text-[13px] font-semibold uppercase tracking-wide whitespace-nowrap">
+            {cat.name}
+          </div>
+        ))}
+      </div>
+
       {/* Announcement bar */}
       <div className="bg-amber-500 text-black text-[10px] sm:text-xs font-semibold text-center py-1.5 sm:py-2 px-4 tracking-widest uppercase leading-tight">
         Entrega grátis acima de R$1999 &nbsp;|&nbsp; Código&nbsp;
@@ -71,7 +154,7 @@ export default function Header() {
         } border-b border-white/5`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          {/* Tier 1: Top Bar (Logo, Search, Contact, Cart) */}
+          {/* Tier 1: Top Bar */}
           <div className="flex items-center justify-between h-16 sm:h-20 gap-4 sm:gap-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0 group">
@@ -94,9 +177,8 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Actions (Contact + Cart + Mobile Search/Menu) */}
+            {/* Actions */}
             <div className="flex items-center gap-1 sm:gap-3 shrink-0">
-              {/* Mobile search toggle */}
               <button
                 className="md:hidden p-2 text-white/70 hover:text-white hover:bg-white/8 rounded-full transition-all"
                 onClick={() => setSearchOpen(!searchOpen)}
@@ -124,7 +206,6 @@ export default function Header() {
                 )}
               </Link>
 
-              {/* Mobile menu toggle */}
               <button
                 className="lg:hidden p-2 text-white/70 hover:text-white hover:bg-white/8 rounded-full transition-all"
                 onClick={() => setMenuOpen(!menuOpen)}
@@ -134,20 +215,23 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Tier 2: Bottom Bar (Desktop Categories) */}
-          <div className="hidden lg:flex items-center gap-6 h-12 border-t border-white/5 relative z-40">
+          {/* Tier 2: Bottom Bar (Priority+ Navigation) */}
+          <div 
+            ref={containerRef}
+            className="hidden lg:flex items-center gap-6 h-12 border-t border-white/5 relative z-40 overflow-hidden"
+          >
             {visibleCategories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/shop?category=${cat.name}`}
-                className="text-[13px] font-semibold text-white/70 hover:text-white transition-colors whitespace-nowrap tracking-wide uppercase"
+                className="text-[13px] font-semibold text-white/70 hover:text-white transition-colors whitespace-nowrap tracking-wide uppercase flex-shrink-0"
               >
                 {cat.name}
               </Link>
             ))}
 
             {hiddenCategories.length > 0 && (
-              <div className="relative group h-full flex items-center">
+              <div className="relative group h-full flex items-center flex-shrink-0">
                 <button className="flex items-center gap-1.5 text-[13px] font-semibold text-white/70 hover:text-white transition-colors h-full tracking-wide uppercase">
                   + Categorias <ChevronDown size={14} />
                 </button>
@@ -167,11 +251,11 @@ export default function Header() {
               </div>
             )}
 
-            <div className="flex-1" /> {/* Spacer */}
+            <div className="flex-1" /> {/* Spacer dinâmico */}
             
             <Link
               href="/shop"
-              className="text-[13px] font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest flex items-center h-full"
+              className="text-[13px] font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest flex items-center h-full flex-shrink-0"
             >
               Ofertas
             </Link>
