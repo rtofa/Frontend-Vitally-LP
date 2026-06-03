@@ -57,11 +57,6 @@ export default function ProductGridSection({ title, subtitle, categoryFilterName
     };
   }, [categoryFilterName]);
 
-  // Regra de negócio: Se não houver produtos dessa categoria, não exiba a seção vazia.
-  if (!loading && !error && products.length === 0) {
-    return null;
-  }
-
   return (
     <section className="relative z-10 py-12 sm:py-20 max-w-7xl mx-auto px-4 lg:px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-10">
@@ -96,7 +91,15 @@ export default function ProductGridSection({ title, subtitle, categoryFilterName
         </div>
       )}
 
-      {!loading && !error && (
+      {!loading && !error && products.length === 0 && (
+        <div className="glass-card rounded-2xl p-12 text-center flex flex-col items-center justify-center">
+          <p className="text-white/60 text-sm sm:text-base">
+            Não foi possível carregar os produtos agora ou não há lançamentos.
+          </p>
+        </div>
+      )}
+
+      {!loading && !error && products.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
           {products.map((product) => {
             const name = product.productName ?? product.name ?? 'Produto';
