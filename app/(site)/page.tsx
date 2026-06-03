@@ -2,6 +2,7 @@ import HeroSection from '@/components/home/HeroSection';
 import PerksStrip from '@/components/home/PerksStrip';
 import ProductGridSection from '@/components/home/ProductGridSection';
 import CategoryCarousel from '@/components/home/CategoryCarousel';
+import VideoSection from '@/components/home/VideoSection';
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <ProductGridSection title="Lançamentos" subtitle="Novidades" categoryFilterName="Lançamentos" />
       <CategoryCarousel />
       <ProductGridSection title="Destaques" subtitle="Populares" categoryFilterName="Destaques" />
+      <VideoSection />
     </>
   );
 }

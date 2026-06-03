@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Instagram, Facebook, Youtube, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -43,14 +43,38 @@ export default function Footer() {
                 Equipamentos de academia projetados para força, cardio e performance todos os dias.
               </p>
               <div className="flex gap-3">
-                {[Instagram, Facebook, Youtube, Twitter].map((Icon, i) => (
-                  <button
-                    key={i}
-                    className="w-9 h-9 bg-white/5 hover:bg-amber-500/20 border border-white/8 hover:border-amber-500/40 rounded-full flex items-center justify-center text-white/50 hover:text-amber-400 transition-all"
-                  >
-                    <Icon size={15} />
-                  </button>
-                ))}
+                <a
+                  href="https://www.instagram.com/vitallyoficial/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 bg-white/5 hover:bg-amber-500/20 border border-white/8 hover:border-amber-500/40 rounded-full flex items-center justify-center text-white/50 hover:text-amber-400 transition-all"
+                >
+                  <Instagram size={15} />
+                </a>
+                <a
+                  href="https://www.facebook.com/VitallyOficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 bg-white/5 hover:bg-amber-500/20 border border-white/8 hover:border-amber-500/40 rounded-full flex items-center justify-center text-white/50 hover:text-amber-400 transition-all"
+                >
+                  <Facebook size={15} />
+                </a>
+                <a
+                  href="https://www.youtube.com/@vitallyoficial"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 bg-white/5 hover:bg-amber-500/20 border border-white/8 hover:border-amber-500/40 rounded-full flex items-center justify-center text-white/50 hover:text-amber-400 transition-all"
+                >
+                  <Youtube size={15} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/vitally-industria-de-aparelhos-para-ginastica-ltda/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 bg-white/5 hover:bg-amber-500/20 border border-white/8 hover:border-amber-500/40 rounded-full flex items-center justify-center text-white/50 hover:text-amber-400 transition-all"
+                >
+                  <Linkedin size={15} />
+                </a>
               </div>
             </div>
 
@@ -114,7 +138,7 @@ export default function Footer() {
                 </li>
                 <li className="flex items-center gap-2.5 text-white/45 text-xs sm:text-sm">
                   <Phone size={14} className="text-amber-500 shrink-0" />
-                  +55 17 99641-8917
+                  (17) 3214-8585
                 </li>
                 <li className="flex items-start gap-2.5 text-white/45 text-xs sm:text-sm">
                   <MapPin size={14} className="text-amber-500 shrink-0 mt-0.5" />

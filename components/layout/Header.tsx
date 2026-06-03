@@ -71,8 +71,8 @@ export default function Header() {
     let rafId: number;
 
     const calculateVisibleItems = (containerWidth: number) => {
-      // Largura estimada: Botão "+ Categorias" (~120px) + "OFERTAS" (~80px) + flex gaps e segurança = 260px
-      const bufferSpace = 260; 
+      // Largura estimada: Botão "+ Categorias" (~120px) + "TODOS NOSSOS PRODUTOS" (~180px) + flex gaps = ~320px
+      const bufferSpace = 320; 
       let availableSpace = containerWidth - bufferSpace;
       let count = 0;
 
@@ -257,7 +257,7 @@ export default function Header() {
               href="/shop"
               className="text-[13px] font-bold text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest flex items-center h-full flex-shrink-0"
             >
-              Ofertas
+              Todos nossos produtos
             </Link>
           </div>
 
@@ -304,7 +304,7 @@ export default function Header() {
                   className="px-4 py-3.5 text-base text-amber-400 font-bold hover:bg-white/5 rounded-xl transition-all"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Ofertas
+                  Todos nossos produtos
                 </Link>
                 <div className="border-t border-white/8 mt-4 pt-4 flex flex-col gap-1">
                   <Link
