@@ -137,10 +137,13 @@ export default function ProductGridSection({ title, subtitle, categoryFilterName
                     {description}
                   </p>
                 )}
+                {(product.price != null || typeof product.inStock === 'boolean') && (
                 <div className="flex items-center justify-between mt-1 sm:mt-2 pt-2 sm:pt-3 border-t border-white/5">
-                  <span className="text-white font-bold text-sm sm:text-base">
-                    {formatPrice(product.price)}
-                  </span>
+                  {product.price != null && (
+                    <span className="text-white font-bold text-sm sm:text-base">
+                      {formatPrice(product.price)}
+                    </span>
+                  )}
                   {typeof product.inStock === 'boolean' && (
                     <span
                       className={`text-[9px] sm:text-[10px] font-bold uppercase tracking-wider ${
@@ -151,6 +154,7 @@ export default function ProductGridSection({ title, subtitle, categoryFilterName
                     </span>
                   )}
                 </div>
+                )}
               </div>
             </Link>
           );

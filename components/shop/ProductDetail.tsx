@@ -187,6 +187,7 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
             </h1>
 
             {/* Price */}
+            {product.price != null && (
             <div className="mb-4 sm:mb-6">
               <div className="text-white text-2xl sm:text-3xl font-black">
                 {formatPrice(product.price)}
@@ -195,6 +196,7 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
                 ou {formatInstallment(product.price)}
               </p>
             </div>
+            )}
 
             {/* Description */}
             {description && (
@@ -329,9 +331,11 @@ export default function ProductDetail({ productId }: ProductDetailProps) {
                         </span>
                       )}
                       <h3 className="text-white font-semibold text-xs sm:text-sm leading-tight line-clamp-2">{rName}</h3>
+                      {related.price != null && (
                       <div className="pt-2 border-t border-white/5">
                         <span className="text-white font-bold text-sm sm:text-base">{formatPrice(related.price)}</span>
                       </div>
+                      )}
                     </div>
                   </Link>
                 );

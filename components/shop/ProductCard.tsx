@@ -65,14 +65,16 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
 
         <div className="flex items-center justify-between mt-1 pt-2 sm:pt-3 border-t border-white/5">
-          <span className="text-white font-bold text-sm sm:text-base">{formatPrice(product.price)}</span>
+          {product.price != null && (
+            <span className="text-white font-bold text-sm sm:text-base">{formatPrice(product.price)}</span>
+          )}
           <button
             onClick={handleAddToCart}
             className={`p-1.5 sm:p-2 rounded-full transition-all duration-200 ${
               addedToCart
                 ? 'bg-green-500 text-white'
                 : 'bg-amber-500/15 text-amber-400 hover:bg-amber-500 hover:text-black'
-            }`}
+            } ${product.price == null ? 'ml-auto' : ''}`}
           >
             <ShoppingBag size={13} className="sm:w-[15px] sm:h-[15px]" />
           </button>

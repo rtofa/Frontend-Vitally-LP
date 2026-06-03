@@ -87,7 +87,7 @@ export default function ProductForm({ categories, initialData, onSubmit, submitt
           />
         </div>
         <div className="space-y-2">
-          <label className={labelClass}>Preço (R$) *</label>
+          <label className={labelClass}>Preço (R$)</label>
           <input
             type="number"
             step="0.01"
