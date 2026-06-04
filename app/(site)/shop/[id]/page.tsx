@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import ProductDetail from '@/components/shop/ProductDetail';
+import ProductJsonLd from '@/components/shop/ProductJsonLd';
 
 export const metadata = {
   title: 'Detalhes do Produto — Vitally',
@@ -22,6 +23,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         </div>
       </div>
     }>
+      <ProductJsonLd productId={params.id} />
       <ProductDetail productId={params.id} />
     </Suspense>
   );
