@@ -8,11 +8,13 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'https://vitallyoficial.com.br'}/api/:path*`,
+        // Garanta que o source corresponde ao prefixo que o seu frontend usa
+        source: '/api/v1/:path*', 
+        // O DESTINO deve ser o endereço HTTP interno dentro do Docker
+        destination: 'http://vitally-backend:8080/api/v1/:path*', 
       },
     ];
   },
 };
 
-module.exports = nextConfig;
+  module.exports = nextConfig;
