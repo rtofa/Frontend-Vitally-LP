@@ -8,9 +8,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        // DESTINO FIXO (Endereço interno do Docker)
-        destination: 'http://vitally-backend:8080/api/:path*', 
+        source: '/api/v1/:path*',
+        destination: 'http://vitally-backend:8080/api/v1/:path*', // Destino Docker fixo
       },
     ];
   },
