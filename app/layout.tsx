@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: 'Vitally | Equipamentos de Academia Premium',
     template: '%s | Vitally',
   },
-  description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação e Financiamento em até 240x.',
+  description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação. Há mais de 45 anos no mercado.',
   keywords: [
     'equipamentos de academia',
     'equipamentos de ginástica',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     url: 'https://vitallyoficial.com.br',
     siteName: 'Vitally',
     title: 'Vitally | Equipamentos de Academia Premium',
-    description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação e Financiamento em até 240x.',
+    description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação. Há mais de 45 anos no mercado.',
     images: [
       {
         url: '/opengraph-image.jpg',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Vitally | Equipamentos de Academia Premium',
-    description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação e Financiamento em até 240x.',
+    description: 'Fabricação própria de equipamentos de academia comerciais e de alto padrão. 45 Dias de Fabricação. Há mais de 45 anos no mercado.',
     images: ['/opengraph-image.jpg'],
   },
   alternates: {

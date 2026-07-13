@@ -140,7 +140,7 @@ export default function Header() {
 
       {/* Announcement bar */}
       <div className="bg-amber-500 text-black text-[10px] sm:text-xs font-semibold text-center py-1.5 sm:py-2 px-4 tracking-widest uppercase leading-tight">
-        45 Dias de Fabricação &nbsp;|&nbsp; Financiamento em até 240x
+        45 Dias de Fabricação &nbsp;|&nbsp; Há mais de 45 anos no mercado
       </div>
 
       {/* Main nav */}

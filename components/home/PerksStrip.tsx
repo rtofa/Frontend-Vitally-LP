@@ -3,7 +3,7 @@ import { Truck, RotateCcw, Shield, Headphones } from 'lucide-react';
 const perks = [
   { icon: Truck, title: 'Fabricação Própria', desc: 'Direto de nossa indústria' },
   { icon: RotateCcw, title: '45 Dias de Fabricação', desc: 'Equipamentos sob medida' },
-  { icon: Shield, title: 'Financiamento em até 240x', desc: 'Condições exclusivas de crédito' },
+  { icon: Shield, title: 'Há mais de 45 anos no mercado', desc: 'Tradição e confiança' },
   { icon: Headphones, title: 'Suporte Especializado', desc: 'Conte com nossa equipe' },
 ];
 
