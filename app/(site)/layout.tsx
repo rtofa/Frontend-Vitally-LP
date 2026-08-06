@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer';
 import { CartProvider } from '@/components/cart/CartContext';
 import CartDrawer from '@/components/cart/CartDrawer';
 import LeadModal from '@/components/cart/LeadModal';
-
+import WhatsAppWidget from '@/components/whatsapp/WhatsAppWidget';
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,6 +15,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       </div>
       <CartDrawer />
       <LeadModal />
+      <WhatsAppWidget />
     </CartProvider>
   );
 }

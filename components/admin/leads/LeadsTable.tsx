@@ -62,6 +62,7 @@ export default function LeadsTable({ items, loading, error, onRefresh }: Props) 
               <th className="px-6 py-3">E-mail</th>
               <th className="px-6 py-3">Telefone</th>
               <th className="px-6 py-3">Tipo</th>
+              <th className="px-6 py-3">Segmento</th>
               <th className="px-6 py-3">Localização</th>
               <th className="px-6 py-3">Mensagem</th>
               <th className="px-6 py-3">Data</th>
@@ -75,6 +76,7 @@ export default function LeadsTable({ items, loading, error, onRefresh }: Props) 
                   <td className="px-6 py-4"><div className="h-4 w-40 bg-white/10 rounded animate-pulse" /></td>
                   <td className="px-6 py-4"><div className="h-4 w-28 bg-white/10 rounded animate-pulse" /></td>
                   <td className="px-6 py-4"><div className="h-4 w-20 bg-white/10 rounded animate-pulse" /></td>
+                  <td className="px-6 py-4"><div className="h-4 w-24 bg-white/10 rounded animate-pulse" /></td>
                   <td className="px-6 py-4"><div className="h-4 w-32 bg-white/10 rounded animate-pulse" /></td>
                   <td className="px-6 py-4"><div className="h-4 w-48 bg-white/10 rounded animate-pulse" /></td>
                   <td className="px-6 py-4"><div className="h-4 w-28 bg-white/10 rounded animate-pulse" /></td>
@@ -83,13 +85,13 @@ export default function LeadsTable({ items, loading, error, onRefresh }: Props) 
 
             {!loading && error && (
               <tr>
-                <td colSpan={7} className="px-6 py-8 text-center text-rose-400 text-sm">{error}</td>
+                <td colSpan={8} className="px-6 py-8 text-center text-rose-400 text-sm">{error}</td>
               </tr>
             )}
 
             {!loading && !error && items.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-6 py-8 text-center text-white/40 text-sm">
+                <td colSpan={8} className="px-6 py-8 text-center text-white/40 text-sm">
                   Nenhum lead encontrado.
                 </td>
               </tr>
@@ -108,12 +110,15 @@ export default function LeadsTable({ items, loading, error, onRefresh }: Props) 
                     className={`px-2 py-1 rounded text-xs font-semibold tracking-wider ${
                       lead.type === 'QUOTE'
                         ? 'bg-[#39FF14]/10 text-[#39FF14]'
-                        : 'bg-blue-500/10 text-blue-400'
+                        : lead.type === 'WHATSAPP'
+                          ? 'bg-emerald-500/10 text-emerald-400'
+                          : 'bg-blue-500/10 text-blue-400'
                     }`}
                   >
                     {lead.type ?? 'CONTACT'}
                   </span>
                 </td>
+                <td className="px-6 py-4 text-white/60 text-sm">{lead.segment ?? '--'}</td>
                 <td className="px-6 py-4 text-white/60 text-sm">
                   {formatLocation(lead.city, lead.state)}
                 </td>

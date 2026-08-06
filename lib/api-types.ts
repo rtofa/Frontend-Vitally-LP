@@ -124,7 +124,7 @@ export interface BannerStatusPayload {
   active: boolean;
 }
 
-export type LeadType = 'QUOTE' | 'CONTACT';
+export type LeadType = 'QUOTE' | 'CONTACT' | 'WHATSAPP';
 
 export interface LeadProductPayload {
   productId: number | string;
@@ -149,6 +149,7 @@ export interface LeadCreatePayload {
   products?: LeadProductPayload[];
   source?: string;
   items?: LeadItemRequest[];
+  segment?: string;
 }
 
 export interface Lead {
@@ -162,6 +163,7 @@ export interface Lead {
   type?: LeadType;
   products?: LeadProductPayload[];
   source?: string;
+  segment?: string;
   createdAt?: string;
   updatedAt?: string;
 }

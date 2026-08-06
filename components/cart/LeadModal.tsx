@@ -18,18 +18,18 @@ const onlyDigits = (value: string) => value.replace(/\D/g, '');
 
 const formatPhone = (value: string) => {
   const digits = onlyDigits(value).slice(0, 11);
-  if (digits.length === 0) return '';
+  if (digits.length === 0) return '+55 ';
 
   const ddd = digits.slice(0, 2);
-  if (digits.length <= 2) return `(${ddd}`;
+  if (digits.length <= 2) return `+55 (${ddd}`;
 
   const hasNine = digits.length > 10;
   const firstPart = digits.slice(2, hasNine ? 7 : 6);
   const lastPart = digits.slice(hasNine ? 7 : 6, hasNine ? 11 : 10);
 
-  if (!lastPart) return `(${ddd}) ${firstPart}`;
+  if (!lastPart) return `+55 (${ddd}) ${firstPart}`;
 
-  return `(${ddd}) ${firstPart}-${lastPart}`;
+  return `+55 (${ddd}) ${firstPart}-${lastPart}`;
 };
 
 type IbgeState = {
@@ -393,7 +393,7 @@ export default function LeadModal() {
                     ? 'border-rose-500 focus:border-rose-500'
                     : 'border-white/10 focus:border-[#39FF14]/60'
                 } text-white placeholder-white/30 outline-none transition-colors`}
-                placeholder="(11) 99999-9999"
+                placeholder="+55 (11) 99999-9999"
                 required
               />
               {fieldErrors.phone && (
