@@ -12,18 +12,18 @@ const onlyDigits = (value: string) => value.replace(/\D/g, '');
 
 const formatPhone = (value: string) => {
   const digits = onlyDigits(value).slice(0, 11);
-  if (digits.length === 0) return '+55 ';
+  if (digits.length === 0) return '';
 
   const ddd = digits.slice(0, 2);
-  if (digits.length <= 2) return `+55 (${ddd}`;
+  if (digits.length <= 2) return `(${ddd}`;
 
   const hasNine = digits.length > 10;
   const firstPart = digits.slice(2, hasNine ? 7 : 6);
   const lastPart = digits.slice(hasNine ? 7 : 6, hasNine ? 11 : 10);
 
-  if (!lastPart) return `+55 (${ddd}) ${firstPart}`;
+  if (!lastPart) return `(${ddd}) ${firstPart}`;
 
-  return `+55 (${ddd}) ${firstPart}-${lastPart}`;
+  return `(${ddd}) ${firstPart}-${lastPart}`;
 };
 
 type IbgeState = {
@@ -209,7 +209,7 @@ export default function ContatoPage() {
       const payload: LeadCreatePayload = {
         name: form.name,
         email: emailValue,
-        phone: form.phone,
+        phone: `+55 ${form.phone}`,
         city: form.city,
         state: form.state,
         message: form.message,
@@ -304,20 +304,23 @@ export default function ContatoPage() {
                 <label className="text-white/60 text-xs font-semibold uppercase tracking-widest">
                   Telefone
                 </label>
-                <input
-                  type="tel"
-                  value={form.phone}
-                  onChange={handlePhoneChange}
-                  onBlur={() => handleBlur('phone')}
-                  inputMode="tel"
-                  className={`w-full h-12 px-4 rounded-xl bg-black/60 border ${
-                    fieldErrors.phone
-                      ? 'border-rose-500 focus:border-rose-500'
-                      : 'border-white/10 focus:border-[#39FF14]/60'
-                  } text-white placeholder-white/30 outline-none transition-colors`}
-                  placeholder="+55 (11) 99999-9999"
-                  required
-                />
+                <div className="relative flex items-center">
+                  <span className="absolute left-4 text-white/50 text-sm font-medium pointer-events-none select-none">+55</span>
+                  <input
+                    type="tel"
+                    value={form.phone}
+                    onChange={handlePhoneChange}
+                    onBlur={() => handleBlur('phone')}
+                    inputMode="tel"
+                    className={`w-full h-12 pl-12 pr-4 rounded-xl bg-black/60 border ${
+                      fieldErrors.phone
+                        ? 'border-rose-500 focus:border-rose-500'
+                        : 'border-white/10 focus:border-[#39FF14]/60'
+                    } text-white placeholder-white/30 outline-none transition-colors`}
+                    placeholder="(11) 99999-9999"
+                    required
+                  />
+                </div>
                 {fieldErrors.phone && (
                   <p className="text-rose-400 text-xs font-semibold">{fieldErrors.phone}</p>
                 )}
